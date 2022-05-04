@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{%block title%}Library FS Project{% endblock%}</title>
+
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" /> -->
+    <!-- I copied the link above in to a local css file so i can take a better look at it -->
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'CSS/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'CSS/style.css') }}">
+
+   
+    
+    
+
+
+    <meta name="theme-color" content="#7952b3">
+    {%block head%}
+    {%endblock%}
+
+</head>
+
+<body class="library">
+    <section class="  is-fullheight ">
+        {% block nav %}
+        <ul class="nav nav-tabs justify-content-center fixed-top">
+            {% if current_user.id == 1 or current_user.id == 2 %}
+
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="{{ url_for('admin.main') }}" role="button" aria-haspopup="true" aria-expanded="false">Librarian</a>
+            
+            </li>
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('main.index') }}">Library</a>
+            </li>
+            {% if current_user.is_authenticated and current_user.id != 1 and current_user.id != 2%}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('main.account') }}">Account</a>
+            </li>
+            {% endif %}
+
+            {% if not current_user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link " href="{{ url_for('auth.login') }}">Log in</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('auth.register') }}">Sign up</a>
+            </li class="nav-item" >
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link"  href="{{ url_for('main.about') }}">
+                    About
+                </a>
+            </li  >
+            {% if  current_user.is_authenticated  %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('auth.logout') }}" > Log out</a>
+            </li class="nav-item" >
+            {% endif %}
+             
+           
+        </ul>
+
+        {% endblock %}
+        <div class="library container">
+            <div class="container  has-text-centered">
+                {% block content %} 
+                {% endblock %} 
+            </div>
+        </div>
+    </section>
+    <script src="{{ url_for('static', filename = 'JS/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'JS/more.js') }}"></script>
+
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v652eace1692a40cfa3763df669d7439c1639079717194" integrity="sha512-Gi7xpJR8tSkrpF7aordPZQlW2DLtzUlZcumS8dMQjwDHEnw9I7ZLyiOj/6tZStRBGtGgN6ceN6cMH8z7etPGlw==" data-cf-beacon='{"rayId":"7057c5e45a8fadb5","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2021.12.0","si":100}'
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

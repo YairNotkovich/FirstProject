@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<main class=>
+    <main>
+        <section class="py-6 text-start container">
+            <div class="row py-lg-5">
+                <div id="my_header" class=" col-lg-6 col-md-8 mx-auto ">
+                    <h1 class="fw-light text-center">Yair's Flask Library</h1>
+                    <p class="lead text-muted" style = "font-size:medium; font-family:'Courier New', Courier, monospace;">Below are some books taken from a json file compiled out of <span style="font-size:larger; font-weight:bold; font-family: 'Times New Roman', Times, serif;" >'The New York Times Best Seller list'</span>
+                    I extracted the description, image url and author from that list </p>
+                    <p>
+                    <p class="lead text-muted"></p>
+                    <p>
+
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="album py-5 bg-clear">
+            <div class="container">
+
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+                    {% for book in books %}
+                    <!--book- positional index: 0= id,1=name,2=author,3=img_url,4=description,5=year_published ,6=type -->
+                    <!--loan- positional index : 0=id, 1=cust id, 2=cust name, 3=book id,4=book name, 5=loan date ,6=loan return date, book type -->
+                    <div id="{{book[0]}}" class="col">
+                        <div class="card shadow-sm">
+
+                            <img src="{{ book[3]}}" alt="{{book[1]}}" class="book-img">
+                            <div class="card-body">
+                                <p class="card-text text-start">{{book.description}}</p>
+                                <form method="POST" action="/">
+
+                                {% if current_user.is_authenticated %} 
+                                    {% for loan in loans if book[0] == loan[3] and loan[6] is none %}
+                                     
+                                            {% if days_pass(loan[5]) < 0 %} 
+                                                <button name='return_book' value= "{{loan}}"
+                                                class="button is-block overdo is-large is-fullwidth">OVERDO </button>
+                                            {% else %}
+                                                <button name='return_book' value="{{loan|safe}}"
+                                                class="button is-block return is-large is-fullwidth"> Return in {{enum(loan[7])-days_pass(loan[5])}} days </button> 
+                                            {% endif %} 
+                                
+                                    {% else %}
+
+                                        <button name='loan_book' value="{{book[0]}}"
+                                            class="button is-block loan is-large is-fullwidth"> Loan for {{book[6]}}
+                                            days </button> 
+                                    {% endfor %}
+                                    {% else %}
+                                    <p class="text-center"><a  data-toggle="tab" class="nav-link" href="{{ url_for('auth.login') }}">you need to be logged in to "loan" a book </a></p>
+                                {% endif %}
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    {% endblock %}
