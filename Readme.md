@@ -7,18 +7,20 @@ software development.
 taking a 'Python Full-stack' course is my first step in to this world.
 
 ### The project:  
-Creating a web application using `'flask'` and `'sqlite3'` database .  
+Creating a web application using `flask` and `sqlite3` database .  
 The application will simulate Loans management in a book Library.  
 
 
-[Source code on my github](https://github.com/YairNotkovich/Library-V3 "some files shown on the project layout are not included becaus they are set to be ignored by '.gitignore'.  
-the zip file submitted will include all the files and folders.")  
+[Source code on my github](https://github.com/YairNotkovich/FirstProject.git)  
+
+[Deployed on Heroku](https://mypylibrary.herokuapp.com/) MIGHT TAKE A MINUTE TO LOAD  
+heroku rests internal databases every hour or so
 
 <br>
 <br>
 
 ## Navigate the Document:
-
+[Running the app](#running-the-app)
 [Assignment as Given](#assignment-as-given)  
 [Project Layout](#project-layout)  
 [Writing Process:](#writing-process)
@@ -38,9 +40,10 @@ the zip file submitted will include all the files and folders.")
 
 <br>
 <br>
-<br>
+
 
 # Running the app:
+> Before running! please make sure to install all required library's or run 'pip install -r requirements.txt'
 > Please not: for showcase purpose at the first run, The app will put some DATA in the tables  
 When you first run the app wait for the setup to finish:
 ```
@@ -54,6 +57,11 @@ this can take a while but its only for the first run
 
 Done!
 ```
+ [The app is also deployed on heroku](https://mypylibrary.herokuapp.com/),  
+ Note that is can take Up to a minute for the site to load if the database was reset by heroku
+
+ > To run it from terminal please run 'py wsgi.py' or 'python3 wsgi.py
+
 ### Assignment as Given:
 
 ```
@@ -108,45 +116,67 @@ In this project you will implement a simple system to manage books library
 [back to top](#first-project) 
 <br>
 <br>
-<br>
+
 ## Project Layout:
 The project layout should comply with flask conventions  
 i'll try to make it heroku ready  
 ##### ( I need to make sure i update it after any change i make ^^ )
-        BOOKSTORE/    
+        FS-LIBRARY/    
                 ├── app/
                 │   ├── __init__.py # initiation of the data base, app generator and blueprints registration
-                |   ├── models.py
+                |   ├── librarian.py
                 │   ├── auth.py
                 │   ├── main.py
+                │   ├── test.ipynb
                 │   ├── templates/
                 │   │   ├── base.html # the base tamplate
-                │   │   ├── auth/
-                │   │   │   ├── login.html
-                │   │   │   └── register.html
-                │   │   └── main/
-                │   │       ├── create.html
-                │   │       ├── index.html
-                │   │       └── update.html
+                │   │   ├── mng-base.html # includes base.html
+                │   │   ├── about.html
+                │   │   ├── index.html
+                │   │   ├── books.html
+                │   │   ├── account.html
+                │   │   ├── login.html
+                │   │   ├── register.html
+                │   │   ├── customers.html
+                │   │   ├── Librarian.html
+                │   │   ├── overdo.html
+                │   │   ├── add_book.html
+                │   │   ├── add_loan.html
+                │   │   ├── add_customer.html
+                │   │   ├── return_loan.html
                 │   ├── static/
                 │   │   └── css/
-                │   |   ├── style.css
-                    │   └── IMG/
-                    │           #images
-                    └── database/
-                        ├── db.py
-                        └─ Library.sql
-                ├── requirements.txt           
+                │   |   |   ├── style.css
+                │   |   |   ├── more.css
+                │   |   |   ├── dashboard.css
+                │   |   |   ├── bootstrap.min.css
+                │   |   |   ├── bootstrap.min.css.map
+                │   |   |── IMG/
+                │   |   |       #images
+                │   |   |── JS/
+                │   │           some scripts
+                │   └── database/
+                │   │    ├──__init__.py
+                │   │    └─ Library.sql
+                │   │    └─ queries.py
+                │   └── tools/
+                │        ├──__init__.py
+                │        └─ func.sql # functions used along the code
+                │        └─ helpers.py # scripts for starting up the db
+                │ 
+                ├── requirements.txt
+                ├── .gitignore 
+                ├── books.json
+                ├── names.json
+                ├── Procfile
+                ├── Readme.md
+                └── wsgi.py
 
-                ├── tests/
-                │       ├──testquery.ipynb
-                ├── venv/
-                └── .gitignore
                    
 [back to top](#first-project)                                
 <br>
 <br>
-<br>
+
 # Writing Process
 
 
@@ -215,34 +245,75 @@ TypeError: 'password' is an invalid keyword argument for Customer
 
 
 ## The tables in this project:  
-<br>
-<br>
+the tables are defined at database/models.py  
 
+books - as required + added image url and description from json
+customers - as required + email and password. also added active for adding/removing users. not functional
+loans - as required
+<br>
+<br>
 
 ### Setting up the data base
+I created the database as a class  
+at database/__init__.py  
+To initiate it you must create an instance of DB() and run instance.init_db  
 
+```python
+...
+class DB():
+
+    def __init__(self, metadata=Base, uri='', echo=False):
+
+        self.engine = create_engine(uri, echo=echo)
+        self.metadata = metadata
+
+    def init_db(self):
+        self.metadata.metadata.create_all(self.engine, checkfirst=True)
+        self.insert_data()
+...
+```
 <br>
 <br>
-
 
 ### Creating a DAL and infrastructure
+I chose to go with `SQLalchemy` and not `Flask-SQLalchemy` 
+Flask-SQLalchemy is much more friendly to use but i wanted to deal with  
+the regular SQLalchemy  
+
+most of the DAL was defined in the DB class.  
+using as 'db_name.func_name()'  
+functions for repeating DB actions where created:  
+```python
+def add_book(self, book_name, author, year_published, book_type, img_url='', description='') # add a book
+def add_customer(self, name, city, age, email, password) # add a customer
+def loan_book(self, cust_id, book_id, loan_date=None, return_date=None) # create a loan
+def return_book(self, loan_id, return_date) # return a book
+```
+for general use:
+```python
+def exe_stm(self, stm): # receives a SQL query in the form of plane text
+def session(self): # returns an instance of Session()
+```
 
 <br>
 <br>
 
 
-### Testing
-
+### Testing  
+While writing the code i tested the functions with tests.ipynb
 <br>
 <br>
 
-### Adding Logic
-
+### Adding Logic  
+Executing the functions in DB and func.py is primarily done
+inside the vies of main.py, auth.py and librarian.py
+little modifications are made to the input before calling the functions
 <br>
 <br>
 
 ### Web GUI
-
+I used album and dashboard bootstrap templates and modified the CSS to my desire
+I found it very challenging getting th results i wanted
 <br>
 <br>
 
@@ -255,6 +326,7 @@ TypeError: 'password' is an invalid keyword argument for Customer
 /env
 <br>
 <br>
+
 ### External link I referenced for help on this project:  
 [mark down syntax](https://www.markdownguide.org/basic-syntax/)  
 [git doc from class](https://docs.google.com/document/d/1A5I8fDshtHccZRMm91YZubH3bsow3Jh5wfIjfB0O9SE/edit?usp=sharing)  
@@ -283,17 +355,17 @@ a sort of "Lion in the desert"  general guidelines TODO list
 - [x] return book()
 - [X] insert demo loans()
 - [ ] edit customer() - add the details that were not entered when registering
-- [ ] Librarian() - admin
+- [x] Librarian() - admin
 - [X] Customer views
-- [ ] Librarian views
+- [x] Librarian views
 - [X] index.html
 - [X] Base.html
-- [ ] Librarian.html
+- [x] Librarian.html
 - [X] Customer.html
-- [ ] overdo 
-- [ ] about.html
-- [ ] Css
-- [ ] Cleanup
+- [x] overdo 
+- [x] about.html
+- [x] Css
+- [x] Cleanup
 
 
 
@@ -339,3 +411,4 @@ def return_list(string):
     height: auto
 }
 ```
+[back to top](#first-project) 
