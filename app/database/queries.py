@@ -1,5 +1,5 @@
 from re import S
-from sqlalchemy import text
+
 from app.tools.func import enum_book, is_overdo, int_date
 import datetime
 
@@ -10,7 +10,7 @@ def view_loans(db, current = None):
 
         add = f"WHERE loans.cust_id = {current }"
 
-    stm =text(f'''
+    stm =f'''
     SELECT 
     loans.id AS Loan,
     customers.id AS Customer_id,
@@ -23,7 +23,7 @@ def view_loans(db, current = None):
     FROM loans
     INNER JOIN customers ON customers.id = loans.cust_id
     INNER JOIN books ON books.id = loans.book_id
-    {add} ORDER BY loans.return_date IS NULL DESC, loans.return_date  ASC; ''' )
+    {add} ORDER BY loans.return_date IS NULL DESC, loans.return_date  ASC; ''' 
     
     result = db.exe_stm(stm)
     return result
@@ -35,7 +35,7 @@ def books_extended(db, current = None):
     if current:
         add = f"AND loans.cust_id = {current}"
 
-    stm =text(f'''
+    stm =f'''
     SELECT 
     books.id AS book,
     books.name AS Title,
@@ -51,7 +51,7 @@ def books_extended(db, current = None):
     FROM books
     LEFT JOIN loans ON books.id = loans.book_id 
     {add}
-     ; ''' )
+     ; ''' 
     result = db.exe_stm(stm)
     return result
 

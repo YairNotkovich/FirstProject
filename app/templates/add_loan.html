@@ -1,0 +1,58 @@
+{% extends 'mng-base.html' %} 
+{%block title%} Librarian: {{ name }} {%endblock%}
+
+
+{% block content %}
+{% if added %}
+<div class="login-wrap p-4 p-md-5">
+    <div class="d-flex">
+        <div class=" w-100 bg-light text-center">
+            OK
+        </div>
+        <div class="w-100 ">
+            
+        </div>
+    </div>
+</div>
+{%else%}
+<div class="login-wrap p-4 p-md-5">
+    <div class="d-flex">
+        <div class=" w-100 bg-light text-center">
+            Loan a Book
+        </div>
+        <div class="w-100 ">
+            
+        </div>
+    </div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="notification is-danger">
+        
+    </div>
+    {% endif %}
+    {% endwith %}
+    <form action="/add_loan" class="signin-form" method="POST">
+        <div class="form-group mt-3 control">
+            <input type="number" class="form-control" name="book" placeholder="book id">
+           
+        </div>
+        <div class="form-group mt-3 control">
+            <input type="number" class="form-control" name="cust" placeholder="customers id">
+            
+        </div>
+        <div class="form-group mt-3 control">
+            <input type="date" class="form-control" name="date" placeholder="loan date, if empty will be today">
+            
+        </div>
+  
+  
+        <div class="form-group">
+            <button type="submit" name ='book' class="form-control btn btn-primary rounded submit px-3">Create Loan</button>
+        </div>
+    
+    </form>
+
+</div>
+{%endif%}
+{% endblock %}
+

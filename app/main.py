@@ -2,7 +2,7 @@ from flask import Blueprint, redirect, render_template, request
 from flask_login import current_user
 from flask_login import login_required
 from app import Library as DB
-from app.database.queries import view_loans, book_list_overdo, books_list
+from app.database.queries import view_loans, books_list
 from app.tools.func import days_pass, return_list, enum_book
 from app.database.models import Book
 import datetime
@@ -58,5 +58,5 @@ def account():
             loan = request.form.get('return')
             DB.return_book(loan, datetime.date.today())
 
-    return render_template('account.html')
+    return render_template('account.html', name = current_user.name, loans = view_loans(DB, current_user.id))
 

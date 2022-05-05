@@ -1,0 +1,61 @@
+{% extends 'mng-base.html' %} 
+{%block title%} Librarian: {{ name }} {%endblock%}
+
+
+{% block content %}
+{% if added %}
+<div class="login-wrap p-4 p-md-5">
+    <div class="d-flex">
+        <div class=" w-100 bg-light text-center">
+            Book Added
+        </div>
+        <div class="w-100 ">
+            
+        </div>
+    </div>
+</div>
+{%else%}
+<div class="login-wrap p-4 p-md-5">
+    <div class="d-flex">
+        <div class=" w-100 bg-light text-center">
+            Add a Book
+        </div>
+        <div class="w-100 ">
+            
+        </div>
+    </div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="notification is-danger">
+        Book already exists
+    </div>
+    {% endif %}
+    {% endwith %}
+    <form action="/add_book" class="signin-form" method="POST">
+        <div class="form-group mt-3 control">
+            <input type="text" class="form-control" name="title" placeholder="Title">
+           
+        </div>
+        <div class="form-group mt-3 control">
+            <input type="text" class="form-control" name="author" placeholder="Author">
+            
+        </div>
+        <div class="form-group mt-3 control">
+            <input type="date" class="form-control" name="pub" placeholder="Published">
+            
+        </div>
+        <div class="form-group mt-3 control">
+            <input type="number" class="form-control" name="type" placeholder="Type eg 1,2,3">
+           
+        </div>
+  
+        <div class="form-group">
+            <button type="submit" name ='book' class="form-control btn btn-primary rounded submit px-3">Add Book</button>
+        </div>
+    
+    </form>
+
+</div>
+{%endif%}
+{% endblock %}
+

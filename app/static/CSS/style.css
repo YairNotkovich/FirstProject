@@ -6,21 +6,7 @@
 .nav-tabs{
   border-color: #363636;
 }
-table.table-fit {
-  width: auto !important;
-  table-layout: auto !important;
-}
-table.table-fit thead th, table.table-fit tfoot th {
-  width: auto !important;
-}
-table.table-fit tbody td, table.table-fit tfoot td {
-  width: auto !important;
-}
-.table td.fit, 
-.table th.fit {
-    white-space: nowrap;
-    width: 1%;
-}
+
 
 .button {
   background-color: #fff;
@@ -245,60 +231,19 @@ body, html {
 @media (min-width: 768px) {
   .bd-placeholder-img-lg {
     font-size: 3.5rem;
+  }}
+
+/* from stackoverflow */
+.tableFixHead          { overflow: auto; height: 30vw; }
+.tableFixHead thead th {
+   position: sticky; top: 0; z-index: 1; 
   }
-}.table-scroll{
-  /*width:100%; */
-  display: block;
-  empty-cells: show;
-  
-  /* Decoration */
-  border-spacing: 0;
-  border: 1px solid;
-}
+ 
+  table  { border-collapse: collapse; width: 100%; }
 
-.table-scroll thead{
-  background-color: #f1f1f1;  
-  position:relative;
-  display: block;
-  width:100%;
-  overflow-y: scroll;
-}
-
-.table-scroll tbody{
-  /* Position */
-  display: block; position:relative;
-  width:100%; overflow-y:scroll;
-  /* Decoration */
-  border-top: 1px solid rgba(0,0,0,0.2);
-}
-
-.table-scroll tr{
-  width: 100%;
-  display:flex;
-}
-
-.table-scroll td,.table-scroll th{
-  flex-basis:100%;
-  flex-grow:2;
-  display: block;
-  padding: 1rem;
-  text-align:left;
-}
-
-/* Other options */
-
-.table-scroll.small-first-col td:first-child,
-.table-scroll.small-first-col th:first-child{
-  flex-basis:20%;
-  flex-grow:1;
-}
-
-.table-scroll tbody tr:nth-child(2n){
-  background-color: rgba(130,130,170,0.1);
-}
-
-.body-half-screen{
-  max-height: 50vh;
-}
-
-.small-col{flex-basis:10%;}
+  th, td { 
+    padding: 8px 16px;
+    white-space: nowrap; }
+  th{ 
+    background:#eee;
+   }

@@ -68,7 +68,7 @@ class DB():
     def exe_stm(self, stm):
         try:
             with self.engine.connect() as con:
-                result =  con.execute(stm).all()
+                result =  con.execute(text(stm)).all()
                 return result
         except Exception as e:
             print(e)

@@ -1,0 +1,65 @@
+{% extends 'mng-base.html' %} 
+{%block title%} Librarian: {{ name }} {%endblock%}
+
+
+{% block content %}
+    {% if added %}
+    <div class="login-wrap p-4 p-md-5">
+        <div class="d-flex">
+            <div class=" w-100 bg-light text-center">
+                Customer Added
+            </div>
+            <div class="w-100 ">
+                
+            </div>
+        </div>
+    </div>
+    {%else%}
+    <div class="login-wrap p-4 p-md-5">
+        <div class="d-flex">
+            <div class=" w-100 bg-light text-center">
+                Add a Customer
+            </div>
+            <div class="w-100 ">
+                
+            </div>
+        </div>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="notification is-danger bg-light">
+            Already A Customer
+        </div>
+        {% endif %}
+        {% endwith %}
+        <form action="/add_customers" class="signin-form" method="POST">
+            <div class="form-group mt-3 control">
+                <input type="text" class="form-control" name="name" placeholder="Name">
+            
+            </div>
+            <div class="form-group mt-3 control">
+                <input type="text" class="form-control" name="city" placeholder="City">
+                
+            </div>
+            <div class="form-group mt-3 control">
+                <input type="number" class="form-control" name="age" placeholder="Age">
+                
+            </div>
+            <div class="form-group mt-3 control">
+                <input type="email" class="form-control" name="email" placeholder="Email">
+            
+            </div>
+            <div class="form-group  control">
+                <input type="password" name="password" class="form-control" name="password" placeholder="a Password">
+            
+
+            </div>
+            <div class="form-group">
+                <button type="submit" class="form-control btn btn-primary rounded submit px-3">Add Customer</button>
+            </div>
+        
+        </form>
+
+    </div>
+    {%endif%}
+{% endblock %}
+

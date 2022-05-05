@@ -1,0 +1,52 @@
+{% extends 'mng-base.html' %} 
+{%block title%} Librarian: {{ name }} {%endblock%}
+
+    
+
+{% block content %}
+
+  
+
+    <div class=" bg-light" style = "padding: 1rem; border-radius: .25rem;">
+      
+      <h2>Customers </h2>
+        <h6>{{total}} Total</h6>
+      <div class="table-responsive-sm table-fit tableFixHead ">
+        <table >
+            <thead  >
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Customer ID</th>
+                  <th scope="col">Customer</th>
+                  <th scope="col">city</th>
+                  <th scope="col">age</th>
+                  <th scope="col">email</th>
+                  <th scope="col">Active</th>
+              </thead>
+         
+              {% for customer in customers %}
+              <tr >
+                <td>{{loop.index}}</td>
+                <td>{{customer[0]}}</td>
+                <td>{{customer[1]}}</td>
+                <td>{{customer[2]}}</td>
+                <td>{{customer[3]}}</td>
+                <td>{{customer[4]}}</td>
+                {% if customer[5] %}
+                <td>YES</td>
+                {% else %}
+                <td>NO</td>
+                {% endif %}
+              </tr>
+              {% endfor %}
+            
+          </tbody>
+        </table>
+      
+  </div>
+  </main>
+
+
+
+ 
+{% endblock %}

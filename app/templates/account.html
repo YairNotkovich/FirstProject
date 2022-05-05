@@ -1,1 +1,64 @@
 {% extends 'base.html' %} 
+
+
+{% block content %}
+
+  
+
+    <div class=" bg-light py-5 " style = "padding: 1rem; border-radius: .25rem;">
+      
+      <h2>Hi {{name}} </h2>
+      <div class="table-responsive-sm table-fit tableFixHead ">
+        <table >
+          <thead >
+            <tr>
+                <th scope="col-sm">#</th>
+                <th scope="col-sm">Loan ID</th>
+               
+                <th scope="col">Book ID</th>
+                <th scope="col">Book</th>
+                <th scope="col">Loan Date</th>
+                <th scope="col">Return Date</th>
+                <th scope="col">Return</th>
+              </tr>
+          </thead>
+          <tbody class="body-half-screen " >
+            {% for loan in loans %}
+            <tr >
+              <td class="td.fit" >{{loop.index}}</td>
+              <td class="td.fit" >{{loan[0]}}</td>
+              <!-- <td class="td.fit">{{loan[1]}}</td>
+              <td>{{loan[2]}}</td> -->
+              <td>{{loan[3]}}</td>
+              <td>'{{loan[4]}}'</td>
+              <td>{{loan[5]}}</td>
+              <td>  
+                  {%if loan[8] %}
+                    OVERDO
+                    {% else %} 
+                  {% if loan[6] is none %}
+                    Not returned
+                 {% else %}
+                 {{loan[6]}}
+                 {% endif%}
+                 {% endif%}</td>
+              
+              <td>   {% if loan[6] is none %}
+                <form method="post" action="/account">
+                  <button type="submit" name="return" value="{{loan[0]}}">return</button>
+                </form>
+                {% else %}
+                Returned
+                {% endif%}</td>
+             
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      
+  </div>
+
+
+
+ 
+{% endblock %}

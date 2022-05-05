@@ -38,7 +38,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('main.index') }}">Library</a>
             </li>
-            {% if current_user.is_authenticated and current_user.id != 1 and current_user.id != 2%}
+            {% if current_user.is_authenticated %}
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('main.account') }}">Account</a>
             </li>

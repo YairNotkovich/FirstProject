@@ -1,0 +1,52 @@
+{% extends 'mng-base.html' %} 
+{%block title%} Librarian: {{ name }} {%endblock%}
+
+    
+
+{% block content %}
+
+  
+
+    <div class=" bg-light" style = "padding: 1rem; border-radius: .25rem;">
+      
+      <h2>Overdo </h2>
+        <h6>{{total}} Total</h6>
+      <div class="table-responsive-sm table-fit tableFixHead ">
+        <table >
+          <thead >
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Loan No</th>
+              <th scope="col">Customer ID</th>
+              <th scope="col">Customer</th>
+              <th scope="col">Book ID</th>
+              <th scope="col">Book</th>
+              <th scope="col">Loan Date</th>
+              <th scope="col">Return Date</th>
+             
+              </tr>
+          </thead>
+          <tbody class="body-half-screen " >
+            {% for loan in loans %}
+            <tr >
+              <td>{{loop.index}}</td>
+              <td>{{loan[0]}}</td>
+              <td>{{loan[1]}}</td>
+              <td>{{loan[2]}}</td>
+              <td>{{loan[3]}}</td>
+              <td>'{{loan[4]}}'</td>
+              <td>{{loan[5]}}</td>
+              <td>{{loan[6]}}</td>
+            </tr>
+            {% endfor %}
+            
+          </tbody>
+        </table>
+      
+  </div>
+  </main>
+
+
+
+ 
+{% endblock %}
