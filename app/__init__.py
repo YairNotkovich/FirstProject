@@ -3,7 +3,7 @@ from flask_login import LoginManager
 from app.database.models import Customer
 from app.database import DB
 
-URL = "sqlite:///app/database/Library.sql"
+URL = "postgres://yivkfhqjbzaims:8b6ba12d37658c70e04cc60d874918cb00c5ab5a23cda0c79f0ccd70eed230d4@ec2-3-218-171-44.compute-1.amazonaws.com:5432/dc6qachd1jee60"
 
 Library = DB( uri=URL)
 
