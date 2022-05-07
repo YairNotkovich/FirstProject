@@ -16,32 +16,36 @@ admin = Blueprint('admin', __name__)
 def main():
     loans = loans_with_overdo(DB)
 
-    return render_template('Librarian.html', name = current_user.name, loans = loans, total = len(loans))
+    return render_template('librarian/Librarian.html', name = current_user.name, data = loans, total = len(loans),Title="Loans")
 
 
-@admin.route('/overdo')
+@admin.route('/librarian',methods=["POST"])
 @login_required
-def overdo_pg():
-    over = []
-    loans = loans_with_overdo(DB)
-    for loan in loans:
-        if loan[8]:
-            over.append(loan)
-    return render_template('overdo.html', name = current_user.name, loans = over, total = len(over))
+def reports():
+
+    if "loans" in request.form:
+        title = "Loans"
+        data = loans_with_overdo(DB)
+        
+
+    if "overdo" in request.form:
+        title = "Overdo"
+        data = []
+        loans = loans_with_overdo(DB)
+        for loan in loans:
+            if loan[8]:
+                data.append(loan)
+
+    if "books" in request.form:
+        title = "Books"
+        data = books_list(DB, Book)
+
+    if "customers" in request.form:
+        title = "Customers"
+        data = DB.exe_stm("SELECT * FROM customers")
 
 
-@admin.route('/books')
-@login_required
-def books_pg():
-    books = books_list(DB, Book)
-    return render_template('books.html', name = current_user.name, books = books, total = len(books))
-
-
-@admin.route('/customers')
-@login_required
-def customers_pg():
-    customers = DB.exe_stm("SELECT * FROM customers")
-    return render_template('customers.html', name = current_user.name, customers = customers, total = len(customers))
+    return render_template('librarian/Librarian.html', name = current_user.name, data = data, total = len(data),Title = title)
 
 
 
@@ -60,7 +64,7 @@ def add_customers():
         else:
             flash('Email address already exists you might already have an account')
             return redirect(url_for('admin.add_customers'))  
-    return render_template("add_customer.html", name = current_user.name, added=added)
+    return render_template("librarian/add_customer.html", name = current_user.name, added=added)
 
 
 @admin.route('/add_book',methods=['GET', 'POST'])
@@ -79,7 +83,7 @@ def add_book():
         else:
             flash('')
             return redirect(url_for('admin.add_book'))  
-    return render_template("add_book.html", name = current_user.name, added=added)
+    return render_template("librarian/add_book.html", name = current_user.name, added=added)
 
 
 
@@ -100,7 +104,7 @@ def add_loan():
     
         if DB.loan_book(book,customer,loan_date):
             added = True  
-    return render_template("add_loan.html", name = current_user.name, added=added)
+    return render_template("librarian/add_loan.html", name = current_user.name, added=added)
 
 
 @admin.route('/return_loan',methods=['GET', 'POST'])
@@ -118,4 +122,4 @@ def return_loan():
     
         if DB.return_book(loan,return_date):
             added = True  
-    return render_template("return_loan.html", name = current_user.name, added=added)
+    return render_template("librarian/return_loan.html", name = current_user.name, added=added)

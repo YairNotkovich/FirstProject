@@ -35,18 +35,13 @@ def index():
             
             return redirect(request.url + f'#{int(field)}')
 
-    return render_template('index.html',books = books, loans = loans, days_pass = days_pass, enum = enum_book, today = TODAY.strftime('%Y,%M,%D') )
+    return render_template('main/index.html',books = books, loans = loans, days_pass = days_pass, enum = enum_book, today = TODAY.strftime('%Y,%M,%D') )
 
 
-@main.route('/welcome')
-@login_required
-def welcome():
-
-    return render_template('welcome.html', name = current_user.name)
 
 @main.route('/about')
 def about():
-    return render_template('about.html')
+    return render_template('main/about.html')
 
 
 @main.route('/account',methods=['GET', 'POST'])
@@ -58,5 +53,5 @@ def account():
             loan = request.form.get('return')
             DB.return_book(loan, datetime.date.today())
 
-    return render_template('account.html', name = current_user.name, loans = view_loans(DB, current_user.id))
+    return render_template('main/account.html', name = current_user.name, loans = view_loans(DB, current_user.id))
 

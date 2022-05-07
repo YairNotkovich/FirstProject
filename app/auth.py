@@ -16,7 +16,7 @@ auth = Blueprint('auth', __name__)
 # I will add new customers using a regration page
 @auth.route('/register')
 def register():
-    return render_template('register.html')
+    return render_template('auth/register.html')
 
 @auth.route('/register', methods=['POST'])
 def register_post(): 
@@ -36,7 +36,7 @@ def register_post():
 
 @auth.route('/login')
 def login():
-    return render_template('login.html')
+    return render_template('auth/login.html')
 
 @auth.route('/login', methods=['POST'])
 def login_post():

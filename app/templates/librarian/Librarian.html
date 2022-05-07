@@ -1,0 +1,136 @@
+{% extends 'mng-base.html' %} 
+{%block title%} Librarian: {{ name }} {%endblock%}
+
+    
+
+{% block content %}
+
+  
+
+    <div  class="report bg-light " >
+      
+      <h2>{{Title}} </h2>
+        <h6>{{total}} Total</h6>
+      <div id = "reports-table" class="table-responsive-sm table-fit tableFixHead ">
+        <table >
+          <thead >
+            {% if Title == "Loans" %}
+            <tr>
+                <th scope="col-sm">#</th>
+                <th scope="col-sm">Loan ID</th>
+                <th scope="col">Customer ID</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Book ID</th>
+                <th scope="col">Book</th>
+                <th scope="col">Loan Date</th>
+                <th scope="col">Return Date</th>
+                <th scope="col">Overdo</th>
+              </tr>
+              {%endif%}
+              {% if Title== "Overdo" %}
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Loan No</th>
+                <th scope="col">Customer ID</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Book ID</th>
+                <th scope="col">Book</th>
+                <th scope="col">Loan Date</th>
+                <th scope="col">Return Date</th>  
+              </tr>
+              {% endif %}
+              {% if Title== "Books" %}
+              <tr>
+                <th scope="col-sm">#</th>
+                <th scope="col-sm">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Author</th>
+                <th scope="col">Published</th>
+                <th scope="col">Type</th>
+              </tr>
+              {% endif %}
+              {% if Title== "Customers" %}
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Customer ID</th>
+                <th scope="col">Customer</th>
+                <th scope="col">city</th>
+                <th scope="col">age</th>
+                <th scope="col">email</th>
+                <th scope="col">Active</th>
+              </tr>    
+              {% endif %}
+          </thead>
+      
+          <tbody class="body-half-screen " >
+            {% if Title == "Loans" %}
+            {% for loan in data %}
+            <tr >
+              <td class="td.fit" >{{loop.index}}</td>
+              <td class="td.fit" >{{loan[0]}}</td>
+              <td class="td.fit">{{loan[1]}}</td>
+              <td>{{loan[2]}}</td>
+              <td>{{loan[3]}}</td>
+              <td>'{{loan[4]}}'</td>
+              <td>{{loan[5]}}</td>
+              <td>{{loan[6]}}</td>
+              {%if loan[8] %}
+              <td>OVERDO</td>
+              {%else%}
+              <td>No</td>
+              {% endif %}
+            </tr>
+            {% endfor %}
+            {%endif%}
+            {% if Title== "Overdo" %}
+            {% for loan in data %}
+            <tr >
+              <td>{{loop.index}}</td>
+              <td>{{loan[0]}}</td>
+              <td>{{loan[1]}}</td>
+              <td>{{loan[2]}}</td>
+              <td>{{loan[3]}}</td>
+              <td>'{{loan[4]}}'</td>
+              <td>{{loan[5]}}</td>
+              <td>{{loan[6]}}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+            {% if Title== "Books" %}
+            {% for book in data %}
+            <tr >
+            <td >{{loop.index}}</td>
+            <td >{{book[0]}}</td>
+            <td >{{book[1]}}</td>
+            <td >{{book[2]}}</td>
+            <td >{{book[5]}}</td>
+            <td >{{book[6]}}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+            {% if Title== "Customers" %}
+            {% for customer in data %}
+              <tr >
+                <td>{{loop.index}}</td>
+                <td>{{customer[0]}}</td>
+                <td>{{customer[1]}}</td>
+                <td>{{customer[2]}}</td>
+                <td>{{customer[3]}}</td>
+                <td>{{customer[4]}}</td>
+                {% if customer[5] %}
+                <td>YES</td>
+                {% else %}
+                <td>NO</td>
+                {% endif %}
+              </tr>
+              {% endfor %}
+            {% endif %}
+          </tbody>
+        </table>
+      
+  </div>
+
+
+
+ 
+{% endblock %}

@@ -129,31 +129,35 @@ i'll try to make it heroku ready
                 │   ├── main.py
                 │   ├── test.ipynb
                 │   ├── templates/
+                │   │   ├── main/
+                │   │   │  ├── index.html
+                │   │   │  ├── about.html
+                │   │   │  └── account.html
+                │   │   │
+                │   │   ├── auth/
+                │   │   │  ├── login.html
+                │   │   │  └── register.html
+                │   │   │
+                │   │   ├── librarian/
+                │   │   │  ├── Librarian.html
+                │   │   │  ├── add_book.html
+                │   │   │  ├── add_customer.html
+                │   │   │  ├── add_loan.html
+                │   │   │  └── return_loan.html 
+                │   │   │
                 │   │   ├── base.html # the base tamplate
-                │   │   ├── mng-base.html # includes base.html
-                │   │   ├── about.html
-                │   │   ├── index.html
-                │   │   ├── books.html
-                │   │   ├── account.html
-                │   │   ├── login.html
-                │   │   ├── register.html
-                │   │   ├── customers.html
-                │   │   ├── Librarian.html
-                │   │   ├── overdo.html
-                │   │   ├── add_book.html
-                │   │   ├── add_loan.html
-                │   │   ├── add_customer.html
-                │   │   ├── return_loan.html
+                │   │   └── mng-base.html # includes base.html
+                │   │   
                 │   ├── static/
                 │   │   └── css/
                 │   |   |   ├── style.css
                 │   |   |   ├── more.css
                 │   |   |   ├── dashboard.css
                 │   |   |   ├── bootstrap.min.css
-                │   |   |   ├── bootstrap.min.css.map
+                │   |   |   └── bootstrap.min.css.map
                 │   |   |── IMG/
                 │   |   |       #images
-                │   |   |── JS/
+                │   |   └── JS/
                 │   │           some scripts
                 │   └── database/
                 │   │    ├──__init__.py
@@ -354,7 +358,6 @@ a sort of "Lion in the desert"  general guidelines TODO list
 - [x] loan book()
 - [x] return book()
 - [X] insert demo loans()
-- [ ] edit customer() - add the details that were not entered when registering
 - [x] Librarian() - admin
 - [X] Customer views
 - [x] Librarian views

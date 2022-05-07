@@ -218,8 +218,17 @@ body, html {
 
 
 /* MANAGER */
+#report-table{
+  float:right;
+  width: 75vw;
+  height: 70vh;
+}
 
-
+.report{
+ padding: 1rem;
+ border-radius: .25rem;
+ margin-top: 5vh;
+}
 .bd-placeholder-img {
   font-size: 1.125rem;
   text-anchor: middle;
@@ -243,7 +252,10 @@ body, html {
 
   th, td { 
     padding: 8px 16px;
-    white-space: nowrap; }
+    word-wrap: break-word;
+
+    white-space: pre-wrap; }
+    
   th{ 
     background:#eee;
    }
