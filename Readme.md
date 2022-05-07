@@ -251,9 +251,9 @@ TypeError: 'password' is an invalid keyword argument for Customer
 ## The tables in this project:  
 the tables are defined at database/models.py  
 
-books - as required + added image url and description from json
-customers - as required + email and password. also added active for adding/removing users. not functional
-loans - as required
+books - as required + added image url and description from json  
+customers - as required + email and password. also added active for adding/removing users. not functional  
+loans - as required  
 <br>
 <br>
 
