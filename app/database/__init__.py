@@ -1,5 +1,7 @@
 from sqlalchemy import create_engine, text, func,update
 from sqlalchemy.orm import sessionmaker
+
+from app.tools.external_api import get_books
 from .models import Base, Book, Customer, Loan
 from sqlalchemy.exc import IntegrityError
 import json
@@ -237,8 +239,9 @@ class DB():
         if self.has_data('books'):
             #wic('books already has startup data')
             return True
-        with open("books.json", 'r') as js:
-            lists = json.loads(js.read())
+        # with open("books.json", 'r') as js:
+        #     lists = json.loads(js.read())
+        lists = get_books()
         i = 0
         for list in lists["results"]["lists"]:
             for book in list["books"]:
